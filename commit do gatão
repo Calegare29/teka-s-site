@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interior Design Studio</title>
+  <style>
+    :root {
+      --orange: #ffa900;
+      --blue: #1800ad;
+      --green: #146215;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background-color: var(--orange);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+
+    .instagram-btn, .phone-spot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--green);
+      color: white;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .phone-spot {
+      bottom: 70px;
+      background-color: var(--blue);
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      background-color: var(--orange);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-in-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interior Studio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="about" class="fade-in">
+    <h2>About the Studio</h2>
+    <p>We are passionate about transforming spaces into elegant and functional environments. Our team delivers personalized interior design solutions that reflect your unique style.</p>
+  </section>
+
+  <section id="services" class="fade-in">
+    <h2>Services Offered</h2>
+    <ul>
+      <li>Residential Interior Design</li>
+      <li>Commercial Spaces</li>
+      <li>3D Visualization</li>
+      <li>Color Consulting</li>
+    </ul>
+  </section>
+
+  <section id="portfolio" class="fade-in">
+    <h2>Our Portfolio</h2>
+    <p>[Insert portfolio images here]</p>
+  </section>
+
+  <section id="testimonials" class="fade-in">
+    <h2>What Clients Say</h2>
+    <blockquote>“Amazing transformation of my living room. Totally recommend!”</blockquote>
+    <blockquote>“Professional, creative, and reliable!”</blockquote>
+  </section>
+
+  <section id="contact" class="fade-in">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <a href="https://instagram.com" target="_blank" class="instagram-btn">Instagram</a>
+  <div class="phone-spot">Phone: *</div>
+
+  <script>
+    // Animation on scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.3,
+    };
+
+    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("visible");
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+</body>
+</html>
