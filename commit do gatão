@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interior Design Studio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     :root {
       --orange: #ffa900;
@@ -34,13 +35,51 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-grow: 1;
     }
 
     nav a {
       color: white;
-      margin-left: 1rem;
       text-decoration: none;
       font-weight: bold;
+    }
+
+    #scheduleWrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      color: white;
+    }
+
+    #datePickerInput {
+      display: none;
+      padding: 0.3rem 0.5rem;
+      border-radius: 5px;
+      border: none;
+      font-size: 0.9rem;
+      color: black;
+      max-width: 160px;
+      cursor: pointer;
+    }
+
+    #scheduleBtn {
+      background-color: var(--green);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      white-space: nowrap;
     }
 
     section {
@@ -58,30 +97,13 @@
       margin-bottom: 1rem;
     }
 
-    .instagram-btn, .phone-spot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: var(--green);
-      color: white;
-      padding: 0.7rem 1rem;
-      border-radius: 10px;
-      text-decoration: none;
-      margin-top: 10px;
-      display: block;
-    }
-
-    .phone-spot {
-      bottom: 70px;
-      background-color: var(--blue);
-    }
-
     form input, form textarea {
       width: 100%;
       padding: 0.7rem;
       margin-bottom: 1rem;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 1rem;
     }
 
     form button {
@@ -91,6 +113,7 @@
       padding: 0.7rem 1.5rem;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 1rem;
     }
 
     .fade-in {
@@ -102,6 +125,17 @@
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .phone-spot {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background-color: var(--blue);
+      color: white;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      user-select: none;
     }
   </style>
 </head>
@@ -115,10 +149,15 @@
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </nav>
+
+    <div id="scheduleWrapper">
+      <button id="scheduleBtn" type="button">Schedule your call</button>
+      <input type="text" id="datePickerInput" placeholder="Pick date & time" readonly />
+    </div>
   </header>
 
   <section id="about" class="fade-in">
-    <h2>About the Studio</h2>
+    <h2>About the Sorted by Stef</h2>
     <p>We are passionate about transforming spaces into elegant and functional environments. Our team delivers personalized interior design solutions that reflect your unique style.</p>
   </section>
 
@@ -145,34 +184,74 @@
 
   <section id="contact" class="fade-in">
     <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea rows="5" placeholder="Your Message" required></textarea>
+    <form id="contactForm" action="mailto:seuemail@example.com" method="POST" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="hidden" name="scheduled_datetime" id="scheduledDatetimeHidden" />
       <button type="submit">Send Message</button>
     </form>
   </section>
 
-  <a href="https://instagram.com" target="_blank" class="instagram-btn">Instagram</a>
-  <div class="phone-spot">Phone: *</div>
+  <div class="phone-spot">Phone: +1 (555) 123-4567</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    // Animation on scroll
+    // Fade-in on scroll
     const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = {
-      threshold: 0.3,
-    };
+    const appearOptions = { threshold: 0.3 };
 
-    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("visible");
-        appearOnScroll.unobserve(entry.target);
+        observer.unobserve(entry.target);
       });
     }, appearOptions);
 
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
+    faders.forEach(fader => appearOnScroll.observe(fader));
+
+    // Schedule button and datepicker
+    const scheduleBtn = document.getElementById('scheduleBtn');
+    const dateInput = document.getElementById('datePickerInput');
+    const hiddenScheduled = document.getElementById('scheduledDatetimeHidden');
+
+    let fpInstance = null;
+
+    scheduleBtn.addEventListener('click', () => {
+      if (!fpInstance) {
+        fpInstance = flatpickr(dateInput, {
+          enableTime: true,
+          dateFormat: "Y-m-d H:i",
+          minDate: "today",
+          onClose: function(selectedDates, dateStr, instance) {
+            if (dateStr) {
+              // Atualiza o botão para mostrar a data selecionada
+              scheduleBtn.textContent = `Scheduled: ${dateStr}`;
+              // Oculta o input para não poluir visual
+              dateInput.style.display = 'none';
+              // Salva no input hidden para envio no formulário
+              hiddenScheduled.value = dateStr;
+            }
+          }
+        });
+      }
+      dateInput.style.display = 'block';
+      dateInput.focus();
+    });
+
+    // Enviar a mensagem com a data agendada embutida
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e) => {
+      if (!hiddenScheduled.value) {
+        e.preventDefault();
+        alert('Please schedule your call date and time before sending the message.');
+        scheduleBtn.click();
+        dateInput.focus();
+      } else {
+        // O formulário será enviado, pode implementar backend para enviar SMS para o seu celular
+        // Aqui está enviando por email via mailto: para seuemail@example.com (troque para seu email real)
+      }
     });
   </script>
 </body>
