@@ -1,258 +1,313 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interior Design Studio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sorted by Stef — Interior Design Studio</title>
+  <meta name="description" content="Sorted by Stef — interior design studio focused on elegant, functional spaces. Portfolio, services and easy call scheduling." />
+  <meta name="theme-color" content="#0f1460" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sorted by Stef — Interior Design Studio" />
+  <meta property="og:description" content="Transforming spaces into elegant and functional environments. Schedule a consultation." />
+  <meta property="og:image" content="https://picsum.photos/1200/630?random=1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.example/" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sorted by Stef — Interior Design Studio" />
+  <meta name="twitter:description" content="Transforming spaces into elegant and functional environments. Schedule a consultation." />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Sorted by Stef",
+    "image":"https://picsum.photos/1200/630?random=1",
+    "@id":"https://yourdomain.example/",
+    "url":"https://yourdomain.example/",
+    "telephone":"+15551234567",
+    "priceRange":"$$$",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"123 Example St",
+      "addressLocality":"City",
+      "addressRegion":"State",
+      "postalCode":"00000",
+      "addressCountry":"US"
+    },
+    "openingHours":"Mo,Tu,We,Th,Fr 09:00-18:00"
+  }
+  </script>
+
+  <!-- Fonts: only the essentials -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Flatpickr CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <style>
-    :root {
-      --orange: #ffa900;
-      --blue: #1800ad;
-      --green: #146215;
-    }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-      background-color: #fff;
-      color: #333;
-    }
-
-    header {
-      background-color: var(--orange);
-      color: white;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    nav {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-grow: 1;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    #scheduleWrapper {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      position: relative;
-      color: white;
-    }
-
-    #datePickerInput {
-      display: none;
-      padding: 0.3rem 0.5rem;
-      border-radius: 5px;
-      border: none;
-      font-size: 0.9rem;
-      color: black;
-      max-width: 160px;
-      cursor: pointer;
-    }
-
-    #scheduleBtn {
-      background-color: var(--green);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    section {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    section:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    h2 {
-      color: var(--blue);
-      margin-bottom: 1rem;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    form button {
-      background-color: var(--orange);
-      color: white;
-      border: none;
-      padding: 0.7rem 1.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease-in-out;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .phone-spot {
-      position: fixed;
-      bottom: 70px;
-      right: 20px;
-      background-color: var(--blue);
-      color: white;
-      padding: 0.7rem 1rem;
-      border-radius: 10px;
-      user-select: none;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Interior Studio</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <div id="scheduleWrapper">
-      <button id="scheduleBtn" type="button">Schedule your call</button>
-      <input type="text" id="datePickerInput" placeholder="Pick date & time" readonly />
+  <header class="site-header" role="banner">
+    <div class="container header-grid">
+      <a class="brand" href="/" aria-label="Sorted by Stef home">
+        <!-- inline SVG logo for crispness -->
+        <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <rect x="8" y="8" width="84" height="84" rx="14" fill="#0f1460"/>
+          <path d="M30 60 L50 30 L70 60 Z" fill="#ffa900"/>
+        </svg>
+        <span class="brand-text">Sorted<span class="accent">by</span>Stef</span>
+      </a>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="scheduleBtn" class="btn btn-primary" aria-haspopup="dialog">Schedule call</button>
+        <a class="btn btn-ghost" href="tel:+15551234567" aria-label="Call us">+1 (555) 123-4567</a>
+        <button id="mobileMenuBtn" class="mobile-menu" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="mobile-menu-panel" hidden>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
   </header>
 
-  <section id="about" class="fade-in">
-    <h2>About the Sorted by Stef</h2>
-    <p>We are passionate about transforming spaces into elegant and functional environments. Our team delivers personalized interior design solutions that reflect your unique style.</p>
-  </section>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Design that feels like home — beautiful, thoughtful, functional.</h1>
+          <p class="lead">We craft interiors that reflect your lifestyle. From residential refreshes to full commercial projects — every space tells a story.</p>
+          <div class="hero-ctas">
+            <button id="ctaSchedule" class="btn btn-primary">Schedule a consultation</button>
+            <a href="#portfolio" class="btn btn-outline">View portfolio</a>
+          </div>
+          <ul class="hero-features" aria-hidden="true">
+            <li>Personalized design plans</li>
+            <li>3D visualizations & mood boards</li>
+            <li>Project management end-to-end</li>
+          </ul>
+        </div>
+        <div class="hero-media" aria-hidden="true">
+          <img data-src="https://picsum.photos/800/560?interior" alt="Stylish living room" class="lazy" width="800" height="560">
+        </div>
+      </div>
+    </section>
 
-  <section id="services" class="fade-in">
-    <h2>Services Offered</h2>
-    <ul>
-      <li>Residential Interior Design</li>
-      <li>Commercial Spaces</li>
-      <li>3D Visualization</li>
-      <li>Color Consulting</li>
-    </ul>
-  </section>
+    <!-- About -->
+    <section id="about" class="container section">
+      <header class="section-header">
+        <h2>About Sorted by Stef</h2>
+        <p class="muted">We transform spaces into elegant, functional environments that match your values and daily life.</p>
+      </header>
+      <div class="split">
+        <div>
+          <p>Our studio blends classic craftsmanship with modern methods. We design with intention: lighting, flow, materials and details that last.</p>
+          <ul class="bullets">
+            <li>Client-centered process</li>
+            <li>Sustainable material sourcing</li>
+            <li>Transparent budgets and timelines</li>
+          </ul>
+        </div>
+        <aside aria-label="Business info" class="box muted">
+          <strong>Studio</strong>
+          <p>City, State — Open Mon–Fri 9am–6pm</p>
+          <p><a href="mailto:hello@yourdomain.example">hello@yourdomain.example</a></p>
+        </aside>
+      </div>
+    </section>
 
-  <section id="portfolio" class="fade-in">
-    <h2>Our Portfolio</h2>
-    <p>[Insert portfolio images here]</p>
-  </section>
+    <!-- Services -->
+    <section id="services" class="container section alt">
+      <header class="section-header">
+        <h2>Services</h2>
+      </header>
+      <div class="cards">
+        <article class="card">
+          <h3>Residential Interior Design</h3>
+          <p>From concept to installation — we create homes that are calm, functional and expressive.</p>
+        </article>
+        <article class="card">
+          <h3>Commercial Spaces</h3>
+          <p>Retail, offices and hospitality with strong identity and effective layouts.</p>
+        </article>
+        <article class="card">
+          <h3>3D Visualization</h3>
+          <p>Photoreal renders and walkthroughs to preview your space before build.</p>
+        </article>
+        <article class="card">
+          <h3>Color & Material Consulting</h3>
+          <p>Curated palettes and material boards that stand the test of time.</p>
+        </article>
+      </div>
+    </section>
 
-  <section id="testimonials" class="fade-in">
-    <h2>What Clients Say</h2>
-    <blockquote>“Amazing transformation of my living room. Totally recommend!”</blockquote>
-    <blockquote>“Professional, creative, and reliable!”</blockquote>
-  </section>
+    <!-- Portfolio -->
+    <section id="portfolio" class="container section">
+      <header class="section-header">
+        <h2>Portfolio</h2>
+        <p class="muted">Selected projects — a mix of residential and commercial work.</p>
+      </header>
 
-  <section id="contact" class="fade-in">
-    <h2>Contact Us</h2>
-    <form id="contactForm" action="mailto:seuemail@example.com" method="POST" enctype="text/plain">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <input type="hidden" name="scheduled_datetime" id="scheduledDatetimeHidden" />
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+      <div class="masonry" id="portfolioGrid" aria-live="polite">
+        <!-- sample items (replace with real images) -->
+        <figure class="portfolio-item">
+          <img data-src="https://picsum.photos/600/480?project1" alt="Project 1 — living room" class="lazy" width="600" height="480" />
+          <figcaption>
+            <strong>Cozy Apartment</strong>
+            <span class="muted">Residential</span>
+          </figcaption>
+        </figure>
 
-  <div class="phone-spot">Phone: +1 (555) 123-4567</div>
+        <figure class="portfolio-item">
+          <img data-src="https://picsum.photos/600/700?project2" alt="Project 2 — kitchen" class="lazy" width="600" height="700" />
+          <figcaption>
+            <strong>Kitchen Refresh</strong>
+            <span class="muted">Residential</span>
+          </figcaption>
+        </figure>
 
+        <figure class="portfolio-item">
+          <img data-src="https://picsum.photos/600/420?project3" alt="Project 3 — office" class="lazy" width="600" height="420" />
+          <figcaption>
+            <strong>Studio Office</strong>
+            <span class="muted">Commercial</span>
+          </figcaption>
+        </figure>
+
+        <figure class="portfolio-item">
+          <img data-src="https://picsum.photos/600/650?project4" alt="Project 4 — retail" class="lazy" width="600" height="650" />
+          <figcaption>
+            <strong>Retail Concept</strong>
+            <span class="muted">Commercial</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="center">
+        <a class="btn btn-outline" href="#contact">Book a consultation</a>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="container section alt">
+      <header class="section-header">
+        <h2>What clients say</h2>
+      </header>
+
+      <div class="testimonials" role="list">
+        <blockquote class="testimonial" role="listitem">
+          <p>“Amazing transformation of my living room. Highly recommend!”</p>
+          <footer>— Laura M.</footer>
+        </blockquote>
+
+        <blockquote class="testimonial" role="listitem">
+          <p>“Professional, creative, and reliable. The team really listened.”</p>
+          <footer>— Ben R.</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container section">
+      <header class="section-header">
+        <h2>Contact & schedule</h2>
+        <p class="muted">Tell us about your project — we'll reply within 48 hours.</p>
+      </header>
+
+      <div class="contact-grid">
+        <form id="contactForm" class="form card" novalidate>
+          <div class="form-row">
+            <label for="name">Name <input id="name" name="name" type="text" required autocomplete="name" /></label>
+            <label for="email">Email <input id="email" name="email" type="email" required autocomplete="email" /></label>
+          </div>
+
+          <label for="message">Project details <textarea id="message" name="message" rows="6" required></textarea></label>
+
+          <label for="datetime" class="muted">Preferred call date & time (optional)</label>
+          <div class="date-row">
+            <input id="datetime" name="scheduled_datetime" type="text" placeholder="Pick a date & time" readonly />
+            <button id="clearDatetime" type="button" class="btn btn-ghost" aria-label="Clear scheduled date">Clear</button>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Send message</button>
+            <button type="button" id="previewBtn" class="btn btn-outline">Preview</button>
+          </div>
+
+          <input type="hidden" id="hiddenScheduled" name="hiddenScheduled" />
+        </form>
+
+        <aside class="card box muted" aria-label="Contact details">
+          <h3>Studio</h3>
+          <p>City, State</p>
+          <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+          <p><a href="mailto:hello@yourdomain.example">hello@yourdomain.example</a></p>
+          <p><strong>Hours:</strong> Mon–Fri 9am–6pm</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div>
+        <p>&copy; <span id="year"></span> Sorted by Stef</p>
+        <p class="muted">Designed with care • Built for clarity</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="footer-links">
+          <li><a href="#privacy">Privacy</a></li>
+          <li><a href="#terms">Terms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Modal for schedule confirmation (accessible) -->
+  <div id="scheduleModal" class="dialog" role="dialog" aria-hidden="true" aria-modal="true" aria-labelledby="scheduleModalTitle">
+    <div class="dialog-panel" role="document">
+      <header>
+        <h3 id="scheduleModalTitle">Confirm your scheduled call</h3>
+        <button id="closeModal" aria-label="Close">✕</button>
+      </header>
+      <div class="dialog-body">
+        <p id="scheduledSummary">No date chosen.</p>
+      </div>
+      <footer class="dialog-actions">
+        <button id="confirmSchedule" class="btn btn-primary">Confirm</button>
+        <button id="cancelSchedule" class="btn btn-ghost">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script>
-    // Fade-in on scroll
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = { threshold: 0.3 };
-
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    faders.forEach(fader => appearOnScroll.observe(fader));
-
-    // Schedule button and datepicker
-    const scheduleBtn = document.getElementById('scheduleBtn');
-    const dateInput = document.getElementById('datePickerInput');
-    const hiddenScheduled = document.getElementById('scheduledDatetimeHidden');
-
-    let fpInstance = null;
-
-    scheduleBtn.addEventListener('click', () => {
-      if (!fpInstance) {
-        fpInstance = flatpickr(dateInput, {
-          enableTime: true,
-          dateFormat: "Y-m-d H:i",
-          minDate: "today",
-          onClose: function(selectedDates, dateStr, instance) {
-            if (dateStr) {
-              // Atualiza o botão para mostrar a data selecionada
-              scheduleBtn.textContent = `Scheduled: ${dateStr}`;
-              // Oculta o input para não poluir visual
-              dateInput.style.display = 'none';
-              // Salva no input hidden para envio no formulário
-              hiddenScheduled.value = dateStr;
-            }
-          }
-        });
-      }
-      dateInput.style.display = 'block';
-      dateInput.focus();
-    });
-
-    // Enviar a mensagem com a data agendada embutida
-    const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', (e) => {
-      if (!hiddenScheduled.value) {
-        e.preventDefault();
-        alert('Please schedule your call date and time before sending the message.');
-        scheduleBtn.click();
-        dateInput.focus();
-      } else {
-        // O formulário será enviado, pode implementar backend para enviar SMS para o seu celular
-        // Aqui está enviando por email via mailto: para seuemail@example.com (troque para seu email real)
-      }
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
