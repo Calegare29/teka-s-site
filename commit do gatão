@@ -42,12 +42,8 @@
   }
   </script>
 
-  <!-- Fonts: only the essentials -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Flatpickr CSS (CDN) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -57,7 +53,6 @@
   <header class="site-header" role="banner">
     <div class="container header-grid">
       <a class="brand" href="/" aria-label="Sorted by Stef home">
-        <!-- inline SVG logo for crispness -->
         <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
           <rect x="8" y="8" width="84" height="84" rx="14" fill="#0f1460"/>
           <path d="M30 60 L50 30 L70 60 Z" fill="#ffa900"/>
@@ -84,7 +79,6 @@
       </div>
     </div>
 
-    <!-- Mobile menu -->
     <div id="mobileMenu" class="mobile-menu-panel" hidden>
       <ul>
         <li><a href="#about">About</a></li>
@@ -175,7 +169,6 @@
       </header>
 
       <div class="masonry" id="portfolioGrid" aria-live="polite">
-        <!-- sample items (replace with real images) -->
         <figure class="portfolio-item">
           <img data-src="https://picsum.photos/600/480?project1" alt="Project 1 — living room" class="lazy" width="600" height="480" />
           <figcaption>
@@ -233,43 +226,13 @@
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact / Schedule -->
     <section id="contact" class="container section">
       <header class="section-header">
-        <h2>Contact & schedule</h2>
-        <p class="muted">Tell us about your project — we'll reply within 48 hours.</p>
+        <p class="muted">Pick a date that works for you.</p>
       </header>
-
-      <div class="contact-grid">
-        <form id="contactForm" class="form card" novalidate>
-          <div class="form-row">
-            <label for="name">Name <input id="name" name="name" type="text" required autocomplete="name" /></label>
-            <label for="email">Email <input id="email" name="email" type="email" required autocomplete="email" /></label>
-          </div>
-
-          <label for="message">Project details <textarea id="message" name="message" rows="6" required></textarea></label>
-
-          <label for="datetime" class="muted">Preferred call date & time (optional)</label>
-          <div class="date-row">
-            <input id="datetime" name="scheduled_datetime" type="text" placeholder="Pick a date & time" readonly />
-            <button id="clearDatetime" type="button" class="btn btn-ghost" aria-label="Clear scheduled date">Clear</button>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Send message</button>
-            <button type="button" id="previewBtn" class="btn btn-outline">Preview</button>
-          </div>
-
-          <input type="hidden" id="hiddenScheduled" name="hiddenScheduled" />
-        </form>
-
-        <aside class="card box muted" aria-label="Contact details">
-          <h3>Studio</h3>
-          <p>City, State</p>
-          <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-          <p><a href="mailto:hello@yourdomain.example">hello@yourdomain.example</a></p>
-          <p><strong>Hours:</strong> Mon–Fri 9am–6pm</p>
-        </aside>
+      <div class="center">
+        <button id="scheduleBtnFooter" class="btn btn-primary" aria-haspopup="dialog">Schedule a consultation</button>
       </div>
     </section>
   </main>
@@ -289,25 +252,19 @@
     </div>
   </footer>
 
-  <!-- Modal for schedule confirmation (accessible) -->
+  <!-- Google Calendar Modal -->
   <div id="scheduleModal" class="dialog" role="dialog" aria-hidden="true" aria-modal="true" aria-labelledby="scheduleModalTitle">
     <div class="dialog-panel" role="document">
       <header>
-        <h3 id="scheduleModalTitle">Confirm your scheduled call</h3>
+        <h3 id="scheduleModalTitle">Schedule your call</h3>
         <button id="closeModal" aria-label="Close">✕</button>
       </header>
       <div class="dialog-body">
-        <p id="scheduledSummary">No date chosen.</p>
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&title=calendar-test&src=bGNhbGVnYXJlMjlAZ21haWwuY29t&src=cHQuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=cHQtYnIuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043&color=%230b8043" style="border:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
       </div>
-      <footer class="dialog-actions">
-        <button id="confirmSchedule" class="btn btn-primary">Confirm</button>
-        <button id="cancelSchedule" class="btn btn-ghost">Cancel</button>
-      </footer>
     </div>
   </div>
 
-  <!-- Dependencies -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
